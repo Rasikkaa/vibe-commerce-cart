@@ -36,18 +36,29 @@ app.get('/api/products', (req, res) => {
   });
 });
 
-// Add to cart
+// Add to cart (from products page)
 app.post('/api/cart', (req, res) => {
   const {productId, qty = 1} = req.body;
   
   db.get('SELECT * FROM cart WHERE productId = ?', [productId], (err, row) => {
     if (row) {
-      // Update existing
+      // Add to existing quantity
       db.run('UPDATE cart SET quantity = quantity + ? WHERE productId = ?', [qty, productId]);
     } else {
       // Add new
       db.run('INSERT INTO cart (productId, quantity) VALUES (?, ?)', [productId, qty]);
     }
+    res.json({success: true});
+  });
+});
+
+// Update cart quantity (from cart page)
+app.put('/api/cart/:id', (req, res) => {
+  const {quantity} = req.body;
+  const cartId = req.params.id;
+  
+  db.run('UPDATE cart SET quantity = ? WHERE id = ?', [quantity, cartId], (err) => {
+    if (err) return res.status(500).json({error: err.message});
     res.json({success: true});
   });
 });

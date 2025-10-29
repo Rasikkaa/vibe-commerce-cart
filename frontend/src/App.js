@@ -67,12 +67,11 @@ function App() {
     }
     
     try {
-      // Remove old item and add with new quantity
-      await fetch(`http://localhost:5000/api/cart/${cartId}`, { method: 'DELETE' });
-      await fetch('http://localhost:5000/api/cart', {
-        method: 'POST',
+      // Use PUT to update quantity directly
+      await fetch(`http://localhost:5000/api/cart/${cartId}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId, qty: newQuantity })
+        body: JSON.stringify({ quantity: newQuantity })
       });
       loadCart();
     } catch (error) {
