@@ -1,0 +1,27 @@
+# Dependencies - DON'T upload these!
+node_modules/
+*/node_modules/
+
+# Database files
+*.sqlite
+*.db
+
+# Build files
+build/
+dist/
+
+# Environment files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
